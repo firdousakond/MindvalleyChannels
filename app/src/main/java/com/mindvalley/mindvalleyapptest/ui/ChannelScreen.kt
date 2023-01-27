@@ -22,5 +22,6 @@ fun ChannelScreen(modifier: Modifier = Modifier){
             text = stringResource(id = R.string.label_new_episodes),
             style = Typography.h6,
         )
+        NewEpisodes()
     }
 }
