@@ -1,5 +1,5 @@
 package com.mindvalley.mindvalleyapptest.domain.model
 
-data class Category(
+data class CategoryEntity(
     val name: String?
 )

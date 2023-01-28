@@ -1,4 +1,4 @@
-package com.mindvalley.mindvalleyapptest.domain.model
+package com.mindvalley.mindvalleyapptest.data.model
 
 data class ChannelData(
     val channels: List<Channel>?

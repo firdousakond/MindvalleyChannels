@@ -4,15 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.mindvalley.mindvalleyapptest.ui.theme.MindValleyChannelTheme
 import com.mindvalley.mindvalleyapptest.ui.theme.appBackground
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: ChannelViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //initObserver()
+        viewModel.getNewEpisodes()
         setContent {
             MindValleyChannelTheme {
                 // A surface container using the 'background' color from the theme
@@ -20,9 +24,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = appBackground
                 ) {
-                    ChannelScreen()
+                    ChannelScreen(viewModel = viewModel)
+                   // viewModel.getNewEpisodes()
                 }
             }
         }
     }
+
 }

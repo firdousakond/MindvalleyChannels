@@ -1,6 +1,6 @@
 package com.mindvalley.mindvalleyapptest.domain.model
 
-data class LatestMedia(
+data class LatestMediaEntity(
     val coverAsset: CoverAssetEntity?,
     val title: String?,
     val type: String?

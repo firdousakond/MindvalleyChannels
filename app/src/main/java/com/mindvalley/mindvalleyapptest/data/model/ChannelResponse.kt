@@ -1,4 +1,4 @@
-package com.mindvalley.mindvalleyapptest.domain.model
+package com.mindvalley.mindvalleyapptest.data.model
 
 data class ChannelResponse(
     val `data`: ChannelData?

@@ -1,6 +1,6 @@
 package com.mindvalley.mindvalleyapptest.domain.model
 
-data class IconAsset(
+data class IconAssetEntity(
     val thumbnailUrl: String?,
     val url: String?
 )
