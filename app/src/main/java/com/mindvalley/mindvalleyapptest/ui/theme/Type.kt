@@ -44,7 +44,8 @@ val Typography = Typography(
         fontFamily = FontFamily(Font(R.font.roboto_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 17.sp,
-        color = White
+        color = White,
+        textAlign = TextAlign.Center
     ),
     subtitle2 = TextStyle(
         fontFamily = FontFamily(Font(R.font.roboto_regular)),

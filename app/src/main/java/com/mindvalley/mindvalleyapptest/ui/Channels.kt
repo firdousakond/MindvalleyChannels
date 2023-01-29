@@ -4,15 +4,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.mindvalley.mindvalleyapptest.domain.MAX_ROW_COUNT
@@ -23,12 +25,13 @@ import com.mindvalley.mindvalleyapptest.ui.theme.Typography
 import com.mindvalley.mindvalleyapptest.ui.theme.White
 import com.mindvalley.mindvalleyapptest.ui.theme.dividerColor
 import kotlin.collections.List
+import com.mindvalley.mindvalleyapptest.R
 
 @Composable
 fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
 
     LazyColumn(
-        modifier = modifier.padding(start = 20.dp, end = 20.dp)
+        modifier = modifier.padding(start = 20.dp, end = 20.dp, top = 15.dp)
     ) {
         items(count = channel.count()) { index ->
             val isSeries = channel[index].series.isNullOrEmpty().not()
@@ -62,6 +65,12 @@ fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
                     rowIndex++
                 }
             }
+            Divider(
+                color = dividerColor, modifier = modifier
+                    .fillMaxWidth()
+                    .width(1.dp)
+                    .padding(top = 50.dp, start = 10.dp, end = 10.dp)
+            )
         }
     }
     Divider(
@@ -80,17 +89,17 @@ fun ChannelsHeaderItem(modifier: Modifier, channel: ChannelEntity, isSeries: Boo
     } else {
         "${channel.mediaCount} episodes"
     }
-    Row(modifier = modifier) {
+    Row(modifier = modifier.padding(top = 20.dp)) {
         AsyncImage(
-            modifier = iconModifier,
+            modifier = iconModifier.clip(CircleShape),
             model = channel.iconAsset?.url,
             contentDescription = null,
-            contentScale = ContentScale.None
+            contentScale = ContentScale.Crop,
+            error = painterResource(R.drawable.placeholder_mindvalley),
         )
-        Column(modifier = modifier) {
+        Column(modifier = modifier.padding(start = 15.dp)) {
             Text(
-                modifier = modifier
-                    .padding(top = 10.dp),
+                modifier = modifier,
                 text = channel.title ?: "",
                 style = Typography.h6, color = White
             )
@@ -108,32 +117,37 @@ fun ChannelsHeaderItem(modifier: Modifier, channel: ChannelEntity, isSeries: Boo
 
 @Composable
 fun ChannelsItem(modifier: Modifier, media: LatestMediaEntity, isSeries: Boolean) {
-    val imageModifier = if (isSeries) {
-        imageModifierLandscape
+
+    val imageModifier : Modifier
+    val textWidth : Dp
+   if (isSeries) {
+        imageModifier = imageModifierLandscape
+       textWidth = 320.dp
     } else {
-        imageModifierPortrait
+        imageModifier =  imageModifierPortrait
+       textWidth = 152.dp
     }
 
-    ConstraintLayout(modifier = modifier) {
-        Column(
-            modifier = modifier.padding(top = 20.dp, end = 10.dp)
-        ) {
-            AsyncImage(
-                modifier = imageModifier.align(Alignment.CenterHorizontally),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(media.coverAsset?.url)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-            )
+    Column(
+        modifier = modifier.padding(top = 20.dp, end = 10.dp)
+    ) {
+        AsyncImage(
+            modifier = imageModifier,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(media.coverAsset?.url)
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            error = painterResource(R.drawable.placeholder_mindvalley)
+        )
 
-            Text(
-                modifier = modifier
-                    .padding(top = 10.dp),
-                text = media.title ?: "",
-                style = Typography.subtitle1
-            )
-        }
+        Text(
+            modifier = modifier
+                .width(textWidth)
+                .padding(top = 10.dp),
+            text = media.title ?: "",
+            style = Typography.subtitle1
+        )
     }
 }

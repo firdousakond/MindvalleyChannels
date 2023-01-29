@@ -30,7 +30,7 @@ fun ChannelScreen(modifier: Modifier = Modifier, viewModel: ChannelViewModel){
                     text = stringResource(id = R.string.label_new_episodes),
                     style = Typography.h6,
                 )
-               // SetEpisodeList(viewModel)
+                SetEpisodeList(viewModel)
                 SetChannelList(viewModel)
         Text(
             modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp),
