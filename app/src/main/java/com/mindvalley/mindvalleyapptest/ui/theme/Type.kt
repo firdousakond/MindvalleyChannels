@@ -5,6 +5,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.mindvalley.mindvalleyapptest.R
 
@@ -19,13 +20,14 @@ val Typography = Typography(
         fontFamily = FontFamily(Font(R.font.roboto_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 30.sp,
-        color = Grey200
+        color = Grey200,
     ),
     h6 = TextStyle(
         fontFamily = FontFamily(Font(R.font.roboto_medium)),
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
-        color = Grey500
+        color = Grey500,
+        textAlign = TextAlign.Center
     ),
 
     button = TextStyle(

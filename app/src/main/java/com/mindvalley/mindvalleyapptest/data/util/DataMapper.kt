@@ -23,7 +23,7 @@ fun List<Channel>.toChannelEntity(): List<ChannelEntity> {
             seryList.add(
                 SeryEntity(
                     coverAsset = CoverAssetEntity(it.coverAsset?.url),
-                    id = it.sid,
+                    id = it.id,
                     title = it.title
                 )
             )
@@ -35,7 +35,6 @@ fun List<Channel>.toChannelEntity(): List<ChannelEntity> {
                 thumbnailUrl = entry.iconAsset?.thumbnailUrl,
                 url = entry.iconAsset?.url
             ),
-            id = entry.cid,
             latestMedia = latestMedia,
             mediaCount = entry.mediaCount,
             series = seryList,

@@ -4,7 +4,6 @@ package com.mindvalley.mindvalleyapptest.domain.model
 data class ChannelEntity(
     val coverAsset: CoverAssetEntity?,
     val iconAsset: IconAssetEntity?,
-    val id: String?,
     val latestMedia: List<LatestMediaEntity>?,
     val mediaCount: Int?,
     val series: List<SeryEntity>?,

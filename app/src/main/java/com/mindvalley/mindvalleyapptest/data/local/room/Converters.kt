@@ -7,7 +7,6 @@ import com.mindvalley.mindvalleyapptest.data.model.*
 
 class Converters {
 
-
     @TypeConverter
     fun fromCoverAsset(cover: CoverAsset?): String? {
         val type = object : TypeToken<CoverAsset>() {}.type
@@ -66,6 +65,30 @@ class Converters {
     fun toMediaList(mediaString: String?): List<LatestMedia>? {
         val type = object : TypeToken<List<LatestMedia>>() {}.type
         return Gson().fromJson<List<LatestMedia>>(mediaString, type)
+    }
+
+    @TypeConverter
+    fun fromLatestMedia(cover: LatestMedia?): String? {
+        val type = object : TypeToken<LatestMedia>() {}.type
+        return Gson().toJson(cover, type)
+    }
+
+    @TypeConverter
+    fun toLatestMedia(str: String?): LatestMedia? {
+        val type = object : TypeToken<LatestMedia>() {}.type
+        return Gson().fromJson<LatestMedia>(str, type)
+    }
+
+    @TypeConverter
+    fun fromSery(cover: Sery?): String? {
+        val type = object : TypeToken<Sery>() {}.type
+        return Gson().toJson(cover, type)
+    }
+
+    @TypeConverter
+    fun toSery(str: String?): Sery? {
+        val type = object : TypeToken<Sery>() {}.type
+        return Gson().fromJson<Sery>(str, type)
     }
 
 }

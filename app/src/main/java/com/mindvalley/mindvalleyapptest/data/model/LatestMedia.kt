@@ -5,9 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class LatestMedia(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     val coverAsset: CoverAsset?,
-    val title: String?,
+    @PrimaryKey
+    val title: String = "",
     val type: String?
 )

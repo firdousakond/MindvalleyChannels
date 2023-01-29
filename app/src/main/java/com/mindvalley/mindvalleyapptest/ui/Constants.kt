@@ -14,3 +14,6 @@ val imageModifierLandscape = Modifier
     .size(width = 320.dp, height = 172.dp)
     .clip(Shapes.medium)
 
+val iconModifier = Modifier
+    .size(width = 50.dp, height = 50.dp)
+

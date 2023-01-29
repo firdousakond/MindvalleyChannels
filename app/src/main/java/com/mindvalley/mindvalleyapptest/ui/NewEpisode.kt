@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -91,7 +90,8 @@ fun NewEpisodes(modifier: Modifier = Modifier, episodes: List<MediaEntity>) {
     }
 
     LazyColumn(
-        modifier = modifier.padding(start = 20.dp, end = 20.dp)
+        modifier = modifier
+            .padding(start = 20.dp, end = 20.dp)
     ) {
         items(count = columnCount) { index ->
             LazyRow {
@@ -111,7 +111,10 @@ fun NewEpisodes(modifier: Modifier = Modifier, episodes: List<MediaEntity>) {
             }
         }
     }
-    Divider(color = dividerColor, modifier = modifier.fillMaxWidth().width(1.dp).padding(top = 50.dp, start = 10.dp, end = 10.dp))
+    Divider(color = dividerColor, modifier = modifier
+        .fillMaxWidth()
+        .width(1.dp)
+        .padding(top = 50.dp, start = 10.dp, end = 10.dp))
 
 }
 

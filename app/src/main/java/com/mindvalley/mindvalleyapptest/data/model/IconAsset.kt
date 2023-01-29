@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class IconAsset(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     val thumbnailUrl: String?,
-    val url: String?
+    @PrimaryKey
+    val url: String = ""
 )
