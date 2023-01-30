@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.mindvalley.mindvalleyapptest.domain.model.CategoryEntity
 import com.mindvalley.mindvalleyapptest.ui.theme.Grey500
@@ -23,7 +24,8 @@ fun Category(modifier: Modifier = Modifier, category: List<CategoryEntity>) {
 
     LazyVerticalGrid(
         modifier = modifier
-            .padding(start = 20.dp, end = 20.dp), columns = GridCells.Fixed(2)
+            .padding(start = 20.dp, end = 20.dp).height(
+                (LocalConfiguration.current.screenHeightDp/3).dp), columns = GridCells.Fixed(2)
     ) {
         items(count = category.count()) { index ->
             CategoryItem(modifier = modifier, category = category[index])

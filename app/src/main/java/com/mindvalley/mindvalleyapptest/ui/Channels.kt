@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -31,7 +32,8 @@ import com.mindvalley.mindvalleyapptest.R
 fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
 
     LazyColumn(
-        modifier = modifier.padding(start = 20.dp, end = 20.dp, top = 15.dp)
+        modifier = modifier.padding(start = 20.dp, end = 20.dp, top = 15.dp).height(
+            (LocalConfiguration.current.screenHeightDp/3).dp)
     ) {
         items(count = channel.count()) { index ->
             val isSeries = channel[index].series.isNullOrEmpty().not()
@@ -44,6 +46,7 @@ fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
                 } else {
                     latestMedia.count() / MAX_ROW_COUNT + 1
                 }
+                //setting max 6 items per row
                 for (i in 0 until columnCount) {
                     val startIndex = rowIndex * MAX_ROW_COUNT
                     val endIndex =
@@ -65,19 +68,15 @@ fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
                     rowIndex++
                 }
             }
-            Divider(
-                color = dividerColor, modifier = modifier
-                    .fillMaxWidth()
-                    .width(1.dp)
-                    .padding(top = 50.dp, start = 10.dp, end = 10.dp)
-            )
+            if (index < channel.size - 1) {
+                Divider(
+                    color = dividerColor, modifier = dividerModifier
+                )
+            }
         }
     }
     Divider(
-        color = dividerColor, modifier = modifier
-            .fillMaxWidth()
-            .width(1.dp)
-            .padding(top = 50.dp, start = 10.dp, end = 10.dp)
+        color = dividerColor, modifier = dividerModifier
     )
 
 }
@@ -97,7 +96,7 @@ fun ChannelsHeaderItem(modifier: Modifier, channel: ChannelEntity, isSeries: Boo
             contentScale = ContentScale.Crop,
             error = painterResource(R.drawable.placeholder_mindvalley),
         )
-        Column(modifier = modifier.padding(start = 15.dp)) {
+        Column(modifier = modifier.padding(start = 15.dp).wrapContentHeight()) {
             Text(
                 modifier = modifier,
                 text = channel.title ?: "",
@@ -129,7 +128,7 @@ fun ChannelsItem(modifier: Modifier, media: LatestMediaEntity, isSeries: Boolean
     }
 
     Column(
-        modifier = modifier.padding(top = 20.dp, end = 10.dp)
+        modifier = modifier.padding(top = 20.dp, end = 10.dp).wrapContentHeight()
     ) {
         AsyncImage(
             modifier = imageModifier,
@@ -151,3 +150,4 @@ fun ChannelsItem(modifier: Modifier, media: LatestMediaEntity, isSeries: Boolean
         )
     }
 }
+

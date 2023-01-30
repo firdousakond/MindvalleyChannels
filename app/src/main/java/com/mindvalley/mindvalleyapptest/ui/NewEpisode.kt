@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -24,65 +25,6 @@ import kotlin.collections.List
 @Composable
 fun NewEpisodes(modifier: Modifier = Modifier, episodes: List<MediaEntity>) {
 
-    /**
-    val mediaData = listOf(
-        MediaEntity(
-            channel = ChannelNameEntity(title = "MindValley Mentoring"),
-            coverAsset = null,
-            title = "The Cure of loneliness",
-            type = "Series"
-        ),
-        MediaEntity(
-            channel = ChannelNameEntity(title = "Impact At Work"),
-            coverAsset = null,
-            title = "Evolved Enterprise",
-            type = "Series"
-        ),
-        MediaEntity(
-            channel = ChannelNameEntity(title = "Happiness Recipe"),
-            coverAsset = null,
-            title = "The Art Of Conciouse Parenting",
-            type = "Series"
-        ),
-        MediaEntity(
-            channel = ChannelNameEntity(title = "Soul Finding"),
-            coverAsset = null,
-            title = "The Physics Of Spirituality",
-            type = "Series"
-        ),
-        MediaEntity(
-            channel = ChannelNameEntity(title = "MindValley Mentoring"),
-            coverAsset = null,
-            title = "The Barcelona Experiment",
-            type = "Series"
-        ),
-        MediaEntity(
-            channel = ChannelNameEntity(title = "Impact At Work"),
-            coverAsset = null,
-            title = "Live Your Quest",
-            type = "Series"
-        ),
-        MediaEntity(
-            channel = ChannelNameEntity(title = "MindValley Mentoring"),
-            coverAsset = null,
-            title = "The Female Perspective",
-            type = "Series"
-        ),
-        MediaEntity(
-            channel = ChannelNameEntity(title = "MindValley Mentoring"),
-            coverAsset = null,
-            title = "Feuled By Courage",
-            type = "Series"
-        ),
-        MediaEntity(
-            channel = ChannelNameEntity(title = "Impact At Work"),
-            coverAsset = null,
-            title = "A-Fest Sardinia 2018",
-            type = "Series"
-        )
-    )
-*/
-
     val columnCount = if (episodes.count() % MAX_ROW_COUNT == 0) {
         episodes.count() / MAX_ROW_COUNT
     } else {
@@ -91,7 +33,7 @@ fun NewEpisodes(modifier: Modifier = Modifier, episodes: List<MediaEntity>) {
 
     LazyColumn(
         modifier = modifier
-            .padding(start = 20.dp, end = 20.dp)
+            .padding(start = 20.dp, end = 20.dp).height( (LocalConfiguration.current.screenHeightDp/3).dp)
     ) {
         items(count = columnCount) { index ->
             LazyRow {
@@ -111,17 +53,14 @@ fun NewEpisodes(modifier: Modifier = Modifier, episodes: List<MediaEntity>) {
             }
         }
     }
-    Divider(color = dividerColor, modifier = modifier
-        .fillMaxWidth()
-        .width(1.dp)
-        .padding(top = 50.dp, start = 10.dp, end = 10.dp))
+    Divider(color = dividerColor, modifier = dividerModifier)
 
 }
 
 @Composable
 fun NewEpisodeItem(modifier: Modifier, media: MediaEntity) {
     Column(
-        modifier = modifier.padding(top = 20.dp, end = 10.dp)
+        modifier = modifier.padding(top = 20.dp, end = 10.dp).wrapContentHeight()
     ) {
         AsyncImage(
             modifier = imageModifierPortrait.align(Alignment.CenterHorizontally),

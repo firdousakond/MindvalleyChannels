@@ -1,6 +1,9 @@
 package com.mindvalley.mindvalleyapptest.ui
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -16,4 +19,9 @@ val imageModifierLandscape = Modifier
 
 val iconModifier = Modifier
     .size(width = 50.dp, height = 50.dp)
+
+val dividerModifier = Modifier
+    .fillMaxWidth()
+    .width(1.dp)
+    .padding(top = 30.dp, start = 10.dp, end = 10.dp)
 
