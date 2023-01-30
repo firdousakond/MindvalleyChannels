@@ -1,4 +1,4 @@
-package com.mindvalley.mindvalleyapptest.ui
+package com.mindvalley.mindvalleyapptest.ui.util
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

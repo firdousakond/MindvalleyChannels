@@ -5,7 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mindvalley.mindvalleyapptest.ui.theme.MindValleyChannelTheme
 import com.mindvalley.mindvalleyapptest.ui.theme.appBackground
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,10 +26,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = appBackground
                 ) {
-                    ChannelScreen(viewModel = viewModel)
+                    MainChannelScreen(viewModel = viewModel)
                 }
             }
         }
+    }
+
+    @Composable
+    fun MainChannelScreen(viewModel: ChannelViewModel) {
+        val isLoading by viewModel.isRefreshing.collectAsStateWithLifecycle()
+        //ChannelScreen(viewModel = viewModel, isLoading = isLoading)
+        ShowShimmerAnimation(isLoading = isLoading, viewModel)
     }
 
 }

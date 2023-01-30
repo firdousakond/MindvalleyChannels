@@ -19,6 +19,8 @@ import com.mindvalley.mindvalleyapptest.domain.MAX_ROW_COUNT
 import com.mindvalley.mindvalleyapptest.domain.model.MediaEntity
 import com.mindvalley.mindvalleyapptest.ui.theme.Typography
 import com.mindvalley.mindvalleyapptest.ui.theme.dividerColor
+import com.mindvalley.mindvalleyapptest.ui.util.dividerModifier
+import com.mindvalley.mindvalleyapptest.ui.util.imageModifierPortrait
 import java.util.*
 import kotlin.collections.List
 

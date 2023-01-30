@@ -1,6 +1,8 @@
 package com.mindvalley.mindvalleyapptest.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
@@ -18,11 +20,11 @@ import com.mindvalley.mindvalleyapptest.domain.model.CategoryEntity
 import com.mindvalley.mindvalleyapptest.domain.model.ChannelEntity
 import com.mindvalley.mindvalleyapptest.domain.model.MediaEntity
 import com.mindvalley.mindvalleyapptest.ui.theme.Typography
+import com.mindvalley.mindvalleyapptest.ui.util.ShimmerListItem
 import timber.log.Timber
 
 @Composable
-fun ChannelScreen(modifier: Modifier = Modifier, viewModel: ChannelViewModel) {
-    val isLoading by viewModel.isRefreshing.collectAsStateWithLifecycle()
+fun ChannelScreen(modifier: Modifier = Modifier, viewModel: ChannelViewModel, isLoading: Boolean) {
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
     SwipeRefresh(state = swipeRefreshState, onRefresh = { viewModel.getChannelsData() }) {
 
@@ -121,4 +123,23 @@ fun SetChannelList(viewModel: ChannelViewModel) {
         }
     }
     Channels(channel = channelEntity)
+}
+
+@Composable
+fun ShowShimmerAnimation(isLoading: Boolean, viewModel: ChannelViewModel) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            repeat(5) {
+                ShimmerListItem(
+                    isLoading = isLoading,
+                    contentAfterLoading = {
+                        ChannelScreen(viewModel = viewModel, isLoading = isLoading)
+                    },
+                    modifier = Modifier
+                        .height(350.dp)
+                        .padding(10.dp)
+                )
+            }
+        }
 }

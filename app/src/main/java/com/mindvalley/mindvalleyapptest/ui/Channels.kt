@@ -27,6 +27,10 @@ import com.mindvalley.mindvalleyapptest.ui.theme.White
 import com.mindvalley.mindvalleyapptest.ui.theme.dividerColor
 import kotlin.collections.List
 import com.mindvalley.mindvalleyapptest.R
+import com.mindvalley.mindvalleyapptest.ui.util.dividerModifier
+import com.mindvalley.mindvalleyapptest.ui.util.iconModifier
+import com.mindvalley.mindvalleyapptest.ui.util.imageModifierLandscape
+import com.mindvalley.mindvalleyapptest.ui.util.imageModifierPortrait
 
 @Composable
 fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
