@@ -4,12 +4,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mindvalley.mindvalleyapptest.R
 import com.mindvalley.mindvalleyapptest.domain.Resource
 import com.mindvalley.mindvalleyapptest.domain.model.CategoryEntity
@@ -20,45 +22,51 @@ import timber.log.Timber
 
 @Composable
 fun ChannelScreen(modifier: Modifier = Modifier, viewModel: ChannelViewModel) {
-
-    Column(
-        modifier = modifier
-            .padding(top = 50.dp, bottom = 20.dp)
-    ) {
-
-        Text(
-            modifier = modifier.padding(start = 20.dp, end = 20.dp),
-            text = stringResource(id = R.string.label_channel),
-            style = Typography.h4
-        )
+    val isLoading by viewModel.isRefreshing.collectAsStateWithLifecycle()
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
+    SwipeRefresh(state = swipeRefreshState, onRefresh = { viewModel.getChannelsData() }) {
 
         Column(
             modifier = modifier
-                .verticalScroll(rememberScrollState())
+                .padding(top = 50.dp, bottom = 20.dp)
         ) {
 
             Text(
-                modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp),
-                text = stringResource(id = R.string.label_new_episodes),
-                style = Typography.h6,
+                modifier = modifier.padding(start = 20.dp, end = 20.dp),
+                text = stringResource(id = R.string.label_channel),
+                style = Typography.h4
             )
-            SetEpisodeList(viewModel)
-            SetChannelList(viewModel)
-            Text(
-                modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp),
-                text = stringResource(id = R.string.label_browse_categories),
-                style = Typography.h6,
-            )
-            SetCategoryList(viewModel)
+
+            Column(
+                modifier = modifier
+                    .verticalScroll(rememberScrollState())
+            ) {
+
+                Text(
+                    modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp),
+                    text = stringResource(id = R.string.label_new_episodes),
+                    style = Typography.h6,
+                )
+                SetEpisodeList(viewModel)
+                SetChannelList(viewModel)
+                Text(
+                    modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp),
+                    text = stringResource(id = R.string.label_browse_categories),
+                    style = Typography.h6,
+                )
+                SetCategoryList(viewModel)
+            }
         }
     }
-
 }
 
 @Composable
 fun SetCategoryList(viewModel: ChannelViewModel) {
-    var categoryEntity: List<CategoryEntity>? = ArrayList()
-    val category by viewModel.categoryStateFlow.collectAsState(initial = Resource.Loading)
+    var categoryEntity by rememberSaveable {
+        mutableStateOf(listOf<CategoryEntity>())
+    }
+
+    val category by viewModel.categoryStateFlow.collectAsStateWithLifecycle()
     when (category) {
         is Resource.Loading -> {
             Timber.e("Loading episodes")
@@ -70,13 +78,15 @@ fun SetCategoryList(viewModel: ChannelViewModel) {
             Timber.e((category as Resource.Error).message)
         }
     }
-    categoryEntity?.let { Category(category = it) }
+    Category(category = categoryEntity)
 }
 
 @Composable
 fun SetEpisodeList(viewModel: ChannelViewModel) {
-    var mediaEntity: List<MediaEntity>? = ArrayList()
-    val episodes by viewModel.episodeStateFlow.collectAsState(initial = Resource.Loading)
+    var mediaEntity by rememberSaveable {
+        mutableStateOf(listOf<MediaEntity>())
+    }
+    val episodes by viewModel.episodeStateFlow.collectAsStateWithLifecycle()
     when (episodes) {
         is Resource.Loading -> {
             Timber.e("Loading episodes")
@@ -88,24 +98,27 @@ fun SetEpisodeList(viewModel: ChannelViewModel) {
             Timber.e((episodes as Resource.Error).message)
         }
     }
-    mediaEntity?.let { NewEpisodes(episodes = it) }
+    NewEpisodes(episodes = mediaEntity)
 
 }
 
 @Composable
 fun SetChannelList(viewModel: ChannelViewModel) {
-    var channelEntity: List<ChannelEntity>? = ArrayList()
-    val episodes by viewModel.channelStateFlow.collectAsState(initial = Resource.Loading)
-    when (episodes) {
+    var channelEntity by rememberSaveable {
+        mutableStateOf(listOf<ChannelEntity>())
+    }
+
+    val channels by viewModel.channelStateFlow.collectAsStateWithLifecycle()
+    when (channels) {
         is Resource.Loading -> {
             Timber.e("Loading episodes")
         }
         is Resource.Success -> {
-            channelEntity = (episodes as Resource.Success<List<ChannelEntity>>).data
+            channelEntity = (channels as Resource.Success<List<ChannelEntity>>).data
         }
         is Resource.Error -> {
-            Timber.e((episodes as Resource.Error).message)
+            Timber.e((channels as Resource.Error).message)
         }
     }
-    channelEntity?.let { Channels(channel = it) }
+    Channels(channel = channelEntity)
 }

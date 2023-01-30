@@ -33,7 +33,7 @@ fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
 
     LazyColumn(
         modifier = modifier.padding(start = 20.dp, end = 20.dp, top = 15.dp).height(
-            (LocalConfiguration.current.screenHeightDp/3).dp)
+            (LocalConfiguration.current.screenHeightDp/2).dp)
     ) {
         items(count = channel.count()) { index ->
             val isSeries = channel[index].series.isNullOrEmpty().not()

@@ -9,7 +9,6 @@ import com.mindvalley.mindvalleyapptest.domain.model.MediaEntity
 import com.mindvalley.mindvalleyapptest.domain.usecase.GetCategoriesUseCase
 import com.mindvalley.mindvalleyapptest.domain.usecase.GetChannelUseCase
 import com.mindvalley.mindvalleyapptest.domain.usecase.GetNewEpisodeUseCase
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -34,7 +33,14 @@ class ChannelViewModel(
         MutableStateFlow<Resource<List<CategoryEntity>>>(Resource.Loading)
     val categoryStateFlow = _categoryStateFlow.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing = _isRefreshing.asStateFlow()
+
+    var apiCallCount = 0
+
     fun getChannelsData() {
+        apiCallCount = 0
+        _isRefreshing.value = true
         viewModelScope.launch {
             supervisorScope {
                 //get new episodes
@@ -43,8 +49,10 @@ class ChannelViewModel(
                         .catch {
                             Timber.e(it.message)
                             _episodeStateFlow.value = Resource.Error(it.message ?: "")
+                            updateRefreshState(false)
                         }.collect {
                             _episodeStateFlow.value = it
+                            updateRefreshState(it is Resource.Loading)
                         }
                 }
                 //get channels
@@ -53,8 +61,10 @@ class ChannelViewModel(
                         .catch {
                             Timber.e(it.message)
                             _channelStateFlow.value = Resource.Error(it.message ?: "")
+                            updateRefreshState(false)
                         }.collect {
                             _channelStateFlow.value = it
+                            updateRefreshState(it is Resource.Loading)
                         }
                 }
                 launch {
@@ -63,11 +73,24 @@ class ChannelViewModel(
                         .catch {
                             Timber.e(it.message)
                             _categoryStateFlow.value = Resource.Error(it.message ?: "")
+                            updateRefreshState(false)
                         }.collect {
                             _categoryStateFlow.value = it
+                            updateRefreshState(it is Resource.Loading)
                         }
                 }
             }
         }
+    }
+
+    private fun updateRefreshState(isLoading: Boolean) {
+        if (isLoading.not()) {
+            apiCallCount++
+            if (apiCallCount == 3) {
+                _isRefreshing.value = false
+                apiCallCount = 0
+            }
+        }
+
     }
 }
