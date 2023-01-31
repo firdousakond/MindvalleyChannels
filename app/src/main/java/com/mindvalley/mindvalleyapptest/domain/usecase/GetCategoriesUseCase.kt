@@ -5,6 +5,6 @@ import com.mindvalley.mindvalleyapptest.domain.model.CategoryEntity
 import com.mindvalley.mindvalleyapptest.domain.repository.IChannelRepo
 import kotlinx.coroutines.flow.Flow
 
-class GetCategoriesUseCase (private val iChannelRepo: IChannelRepo) {
-    suspend fun getCategories(): Flow<Resource<List<CategoryEntity>>> = iChannelRepo.getCategories()
+class GetCategoriesUseCase (private val iChannelRepo: IChannelRepo) : IGetCategoriesUseCase{
+    override suspend fun getCategories(): Flow<Resource<List<CategoryEntity>>> = iChannelRepo.getCategories()
 }

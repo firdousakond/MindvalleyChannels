@@ -6,9 +6,7 @@ import com.mindvalley.mindvalleyapptest.domain.Resource
 import com.mindvalley.mindvalleyapptest.domain.model.CategoryEntity
 import com.mindvalley.mindvalleyapptest.domain.model.ChannelEntity
 import com.mindvalley.mindvalleyapptest.domain.model.MediaEntity
-import com.mindvalley.mindvalleyapptest.domain.usecase.GetCategoriesUseCase
-import com.mindvalley.mindvalleyapptest.domain.usecase.GetChannelUseCase
-import com.mindvalley.mindvalleyapptest.domain.usecase.GetNewEpisodeUseCase
+import com.mindvalley.mindvalleyapptest.domain.usecase.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -17,9 +15,9 @@ import kotlinx.coroutines.supervisorScope
 import timber.log.Timber
 
 class ChannelViewModel(
-    private val getChannelUseCase: GetChannelUseCase,
-    private val getNewEpisodeUseCase: GetNewEpisodeUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getChannelUseCase: IGetChannelUseCase,
+    private val getNewEpisodeUseCase: IGetNewEpisodesUseCase,
+    private val getCategoriesUseCase: IGetCategoriesUseCase
 ) : ViewModel() {
 
     private val _episodeStateFlow = MutableStateFlow<Resource<List<MediaEntity>>>(Resource.Loading)
@@ -91,6 +89,5 @@ class ChannelViewModel(
                 apiCallCount = 0
             }
         }
-
     }
 }
