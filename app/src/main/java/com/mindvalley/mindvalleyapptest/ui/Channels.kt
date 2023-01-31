@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
     LazyColumn(
         modifier = modifier.padding(start = 20.dp, end = 20.dp, top = 15.dp).height(
             (LocalConfiguration.current.screenHeightDp/2).dp)
+            .testTag("channelList")
     ) {
         items(count = channel.count()) { index ->
             val isSeries = channel[index].series.isNullOrEmpty().not()

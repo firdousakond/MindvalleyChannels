@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -45,14 +46,16 @@ fun ChannelScreen(modifier: Modifier = Modifier, viewModel: ChannelViewModel, is
             ) {
 
                 Text(
-                    modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp),
+                    modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp)
+                        .testTag("episodeText"),
                     text = stringResource(id = R.string.label_new_episodes),
                     style = Typography.h6,
                 )
                 SetEpisodeList(viewModel)
                 SetChannelList(viewModel)
                 Text(
-                    modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp),
+                    modifier = modifier.padding(top = 30.dp, start = 20.dp, end = 20.dp)
+                        .testTag("categoryText"),
                     text = stringResource(id = R.string.label_browse_categories),
                     style = Typography.h6,
                 )
@@ -143,7 +146,7 @@ fun SetChannelList(viewModel: ChannelViewModel) {
 @Composable
 fun ShowShimmerAnimation(isLoading: Boolean, viewModel: ChannelViewModel) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().testTag("ShimmerColumn")
     ) {
         repeat(5) {
             ShimmerListItem(

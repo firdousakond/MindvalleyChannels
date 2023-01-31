@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -36,6 +37,7 @@ fun NewEpisodes(modifier: Modifier = Modifier, episodes: List<MediaEntity>) {
     LazyColumn(
         modifier = modifier
             .padding(start = 20.dp, end = 20.dp).height( (LocalConfiguration.current.screenHeightDp/3).dp)
+            .testTag("episodeList")
     ) {
         items(count = columnCount) { index ->
             LazyRow {
