@@ -1,14 +1,14 @@
 package com.mindvalley.mindvalleyapptest.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -78,6 +78,11 @@ fun SetCategoryList(viewModel: ChannelViewModel) {
         }
         is Resource.Error -> {
             Timber.e((category as Resource.Error).message)
+            Toast.makeText(
+                LocalContext.current,
+                stringResource(id = R.string.error_msg_categories),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
     Category(category = categoryEntity)
@@ -98,6 +103,11 @@ fun SetEpisodeList(viewModel: ChannelViewModel) {
         }
         is Resource.Error -> {
             Timber.e((episodes as Resource.Error).message)
+            Toast.makeText(
+                LocalContext.current,
+                stringResource(id = R.string.error_msg_episodes),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
     NewEpisodes(episodes = mediaEntity)
@@ -120,6 +130,11 @@ fun SetChannelList(viewModel: ChannelViewModel) {
         }
         is Resource.Error -> {
             Timber.e((channels as Resource.Error).message)
+            Toast.makeText(
+                LocalContext.current,
+                stringResource(id = R.string.error_msg_channels),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
     Channels(channel = channelEntity)
@@ -127,19 +142,19 @@ fun SetChannelList(viewModel: ChannelViewModel) {
 
 @Composable
 fun ShowShimmerAnimation(isLoading: Boolean, viewModel: ChannelViewModel) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            repeat(5) {
-                ShimmerListItem(
-                    isLoading = isLoading,
-                    contentAfterLoading = {
-                        ChannelScreen(viewModel = viewModel, isLoading = isLoading)
-                    },
-                    modifier = Modifier
-                        .height(350.dp)
-                        .padding(10.dp)
-                )
-            }
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        repeat(5) {
+            ShimmerListItem(
+                isLoading = isLoading,
+                contentAfterLoading = {
+                    ChannelScreen(viewModel = viewModel, isLoading = isLoading)
+                },
+                modifier = Modifier
+                    .height(350.dp)
+                    .padding(10.dp)
+            )
         }
+    }
 }

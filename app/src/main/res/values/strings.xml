@@ -3,4 +3,8 @@
     <string name="label_channel">Channels</string>
     <string name="label_new_episodes">New Episodes</string>
     <string name="label_browse_categories">Browse by categories</string>
+    <string name="error_msg_episodes">Error while loading episodes</string>
+    <string name="error_msg_channels">Error while loading channels</string>
+    <string name="error_msg_categories">Error while loading categories</string>
+
 </resources>

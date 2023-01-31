@@ -10,9 +10,11 @@ import com.mindvalley.mindvalleyapptest.data.repository.ChannelRepo
 import com.mindvalley.mindvalleyapptest.data.util.INetworkUtil
 import com.mindvalley.mindvalleyapptest.data.util.NetworkUtil
 import com.mindvalley.mindvalleyapptest.domain.repository.IChannelRepo
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -38,7 +40,7 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    single { RemoteDataSource(get()) }
+    single { RemoteDataSource(get(),get(named("IODispatcher"))) }
     single { LocalDataSource(get()) }
     single<IChannelRepo> {
         ChannelRepo(
@@ -63,4 +65,8 @@ val databaseModule = module {
 
 val utilModule = module {
     single<INetworkUtil> { NetworkUtil() }
+    single(named("IODispatcher")) {
+        Dispatchers.IO
+    }
 }
+

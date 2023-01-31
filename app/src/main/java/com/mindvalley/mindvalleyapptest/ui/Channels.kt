@@ -51,7 +51,7 @@ fun Channels(modifier: Modifier = Modifier, channel: List<ChannelEntity>) {
                     latestMedia.count() / MAX_ROW_COUNT + 1
                 }
                 //setting max 6 items per row
-                for (i in 0 until columnCount) {
+                repeat(columnCount) {
                     val startIndex = rowIndex * MAX_ROW_COUNT
                     val endIndex =
                         if ((rowIndex * MAX_ROW_COUNT) + MAX_ROW_COUNT > latestMedia.count()) {
