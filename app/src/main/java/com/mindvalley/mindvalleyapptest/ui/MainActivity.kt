@@ -35,7 +35,6 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainChannelScreen(viewModel: ChannelViewModel) {
         val isLoading by viewModel.isRefreshing.collectAsStateWithLifecycle()
-        //ChannelScreen(viewModel = viewModel, isLoading = isLoading)
         ShowShimmerAnimation(isLoading = isLoading, viewModel)
     }
 

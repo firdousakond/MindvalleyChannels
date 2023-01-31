@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import timber.log.Timber
 
-class RemoteDataSource(private val apiService: ApiService, private  val  ioDispatcher: CoroutineDispatcher) {
+class RemoteDataSource(private val apiService: ApiService, private val ioDispatcher: CoroutineDispatcher) {
 
     suspend fun getChannels() = flow {
         try {

@@ -44,7 +44,7 @@ val repositoryModule = module {
     single { LocalDataSource(get()) }
     single<IChannelRepo> {
         ChannelRepo(
-            get(), get(), androidContext()
+            get(), get(), get(),androidContext()
         )
     }
 }

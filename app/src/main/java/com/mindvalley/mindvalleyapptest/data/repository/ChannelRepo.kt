@@ -18,15 +18,13 @@ import com.mindvalley.mindvalleyapptest.domain.model.ChannelEntity
 import com.mindvalley.mindvalleyapptest.domain.model.MediaEntity
 import com.mindvalley.mindvalleyapptest.domain.repository.IChannelRepo
 import kotlinx.coroutines.flow.*
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class ChannelRepo(
-    private val localDataSource: LocalDataSource, private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource,
+    private val remoteDataSource: RemoteDataSource,
+    private val iNetworkUtil: INetworkUtil,
     private val context: Context
-) : IChannelRepo, KoinComponent {
-
-    private val iNetworkUtil: INetworkUtil by inject()
+) : IChannelRepo {
 
     override suspend fun getChannels(): Flow<Resource<List<ChannelEntity>>> =
         object : NetworkBoundResource<List<ChannelEntity>, ChannelResponse>() {
